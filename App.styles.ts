@@ -4,11 +4,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#333",
-    paddingTop: (StatusBar.currentHeight || 0) * 1.5,
+    paddingTop: StatusBar.currentHeight || 0,
   },
 
   introView: {
-    padding: 10,
+    padding: 20,
+    alignItems: "center",
+    borderRadius: 15,
   },
 
   introText: {
@@ -24,7 +26,9 @@ const styles = StyleSheet.create({
 
   introTextLine2: {
     fontSize: 16,
-    color: "#999",
+    opacity: 0.7,
+    marginTop: 10,
+    marginBottom: 10,
   },
 
   item: {
@@ -53,7 +57,6 @@ const styles = StyleSheet.create({
   },
 
   link: {
-    color: "#E666B3",
     textDecorationLine: "underline",
   },
 });

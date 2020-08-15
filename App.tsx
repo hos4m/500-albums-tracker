@@ -10,8 +10,9 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 // @ts-ignore
-import { Text } from "galio-framework";
+import { Text, Button } from "galio-framework";
 import { LinearGradient } from "expo-linear-gradient";
+import Modal from "react-native-modal";
 
 import data from "./album-list.json";
 import styles from "./App.styles";
@@ -21,6 +22,7 @@ import { Album } from "./types";
 export default function App() {
   // AsyncStorage.clear();
   const [storedAlbums, setStoredAlbums] = useState<{ [key: string]: string }>({});
+  const [isModalVisible, setModalVisible] = useState<boolean>(true);
 
   useEffect(() => {
     getStoredItems();
@@ -51,18 +53,28 @@ export default function App() {
 
   const renderIntro = () => {
     return (
-      <View style={styles.introView}>
-        <Text style={[styles.introText, styles.introTextLine1]}>
-          Hey! this is the list of the 500 Greatest Albums of All Time created by{" "}
-          <TextNative style={styles.link} onPress={openLink}>
-            RollingStone
-          </TextNative>
-        </Text>
-        <Text style={[styles.introText, styles.introTextLine2]}>
-          You can use this app to track your progress. Click on an album to mark it as done or
-          undone!
-        </Text>
-      </View>
+      <Modal isVisible={isModalVisible} animationIn="fadeIn" animationOut="fadeOut">
+        <LinearGradient
+          colors={["#E64D66", "#1AB399"]}
+          start={[0, 1]}
+          end={[1, 0]}
+          style={styles.introView}
+        >
+          <Text style={[styles.introText, styles.introTextLine1]}>
+            Hey! this is the list of the 500 Greatest Albums of All Time created by{" "}
+            <TextNative style={styles.link} onPress={openLink}>
+              RollingStone
+            </TextNative>
+          </Text>
+          <Text style={[styles.introText, styles.introTextLine2]}>
+            You can use this app to track your progress. Click on an album to mark it as done or
+            undone!
+          </Text>
+          <Button round color="#50C7C7" onPress={() => setModalVisible(false)}>
+            WHATS POPPIN 💃
+          </Button>
+        </LinearGradient>
+      </Modal>
     );
   };
 
