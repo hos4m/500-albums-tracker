@@ -10,6 +10,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 // @ts-ignore
 import { Text } from "galio-framework";
+import { LinearGradient } from "expo-linear-gradient";
 
 import data from "./album-list.json";
 import styles from "./App.styles";
@@ -73,14 +74,19 @@ export default function App() {
 
     return (
       <TouchableHighlight key={item.Number} onPress={() => albumOnPress(item.Number)}>
-        <View style={itemStyles}>
+        <LinearGradient
+          colors={["#FF6633", "#3366E6"]}
+          start={[0, 1]}
+          end={[1, 0]}
+          style={itemStyles}
+        >
           <Text style={styles.text}>
             <TextNative style={styles.albumNumber}>{albumNumber}</TextNative> {item.Album}
           </Text>
           <Text style={styles.meta}>
             By {item.Artist} &#8226; {item.Genre} &#8212; {item.Year}
           </Text>
-        </View>
+        </LinearGradient>
       </TouchableHighlight>
     );
   };

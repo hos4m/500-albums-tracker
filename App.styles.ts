@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#333",
-    paddingTop: StatusBar.currentHeight,
+    paddingTop: (StatusBar.currentHeight || 0) * 1.5,
   },
 
   introView: {
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    backgroundColor: "orange",
     marginBottom: 10,
     padding: 15,
   },
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
   },
 
   albumNumber: {
-    color: "#ffdb9a",
+    color: "#FFB399",
     paddingRight: 5,
   },
 
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
   },
 
   link: {
-    color: "orange",
+    color: "#E666B3",
     textDecorationLine: "underline",
   },
 });
