@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text as TextNative, TouchableHighlight, SafeAreaView, FlatList } from "react-native";
+import {
+  View,
+  Text as TextNative,
+  TouchableHighlight,
+  SafeAreaView,
+  FlatList,
+  Linking,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 // @ts-ignore
 import { Text } from "galio-framework";
@@ -34,12 +41,20 @@ export default function App() {
     storeAlbum(albumNumber, newVal);
   };
 
+  const openLink = () => {
+    const URL =
+      "https://www.rollingstone.com/music/music-lists/500-greatest-albums-of-all-time-156826/";
+    Linking.openURL(URL).catch((err) => console.error("An error occurred", err));
+  };
+
   const renderIntro = () => {
-    // https://www.rollingstone.com/music/music-lists/500-greatest-albums-of-all-time-156826/
     return (
       <View style={styles.introView}>
         <Text style={[styles.introText, styles.introTextLine1]}>
-          Hey! this is the list of the 500 Greatest Albums of All Time created by RollingStone
+          Hey! this is the list of the 500 Greatest Albums of All Time created by{" "}
+          <TextNative style={styles.link} onPress={openLink}>
+            RollingStone
+          </TextNative>
         </Text>
         <Text style={[styles.introText, styles.introTextLine2]}>
           You can use this app to track your progress. Click on an album to mark it as done or

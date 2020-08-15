@@ -52,6 +52,11 @@ const styles = StyleSheet.create({
     color: "#FFF",
     opacity: 0.8,
   },
+
+  link: {
+    color: "orange",
+    textDecorationLine: "underline",
+  },
 });
 
 export default styles;
