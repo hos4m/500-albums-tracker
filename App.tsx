@@ -9,10 +9,10 @@ import {
 import { StatusBar } from "expo-status-bar";
 // @ts-ignore
 import { Text } from "galio-framework";
-// @ts-ignore
 
 import data from "./album-list.json";
 import styles from "./App.styles";
+import { isOnList, storeAlbum } from "./utils";
 
 export default function App() {
   // AsyncStorage.clear();
@@ -21,37 +21,6 @@ export default function App() {
     const val = await isOnList(albumNumber);
     const newVal = JSON.parse(val) ? false : true;
     await storeAlbum(albumNumber, newVal);
-  };
-
-  const storeAlbum = async (albumNumber: number, newVal: boolean) => {
-    try {
-      await AsyncStorage.setItem(String(albumNumber), JSON.stringify(newVal));
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const isOnList = async (albumNumber: number) => {
-    try {
-      const value = await AsyncStorage.getItem(String(albumNumber));
-      return value ? JSON.parse(value) : false;
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const getAll = async () => {
-    try {
-      const result: any = {};
-      const keys = await AsyncStorage.getAllKeys();
-      for (const key of keys) {
-        const val = await AsyncStorage.getItem(key);
-        result[key] = val;
-      }
-      return result;
-    } catch (error) {
-      alert(error);
-    }
   };
 
   const renderIntro = () => {
