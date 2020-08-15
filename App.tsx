@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   ScrollView,
@@ -12,15 +12,26 @@ import { Text } from "galio-framework";
 
 import data from "./album-list.json";
 import styles from "./App.styles";
-import { isOnList, storeAlbum } from "./utils";
+import { isOnList, storeAlbum, getAll } from "./utils";
 
 export default function App() {
   // AsyncStorage.clear();
+  const [storedAlbums, setStoredAlbums] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    getStoredItems();
+  }, []);
+
+  const getStoredItems = async () => {
+    const result = await getAll();
+    setStoredAlbums(result);
+  };
 
   const albumOnPress = async (albumNumber: number) => {
     const val = await isOnList(albumNumber);
     const newVal = JSON.parse(val) ? false : true;
     await storeAlbum(albumNumber, newVal);
+    getStoredItems();
   };
 
   const renderIntro = () => {
@@ -41,9 +52,14 @@ export default function App() {
   const renderAlbums = () => {
     return data.map((single) => {
       const albumNumber = String(single.Number).padStart(3, "0");
+      const itemStyles =
+        storedAlbums[single.Number] && JSON.parse(storedAlbums[single.Number]) === true
+          ? [styles.item, styles.itemOnList]
+          : [styles.item];
+
       return (
         <TouchableHighlight key={single.Number} onPress={() => albumOnPress(single.Number)}>
-          <View style={styles.item}>
+          <View style={itemStyles}>
             <Text style={styles.text}>
               <TextNative style={styles.albumNumber}>{albumNumber}</TextNative> {single.Album}
             </Text>
