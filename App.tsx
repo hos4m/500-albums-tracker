@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   FlatList,
   Linking,
+  AsyncStorage,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 // @ts-ignore
@@ -33,7 +34,7 @@ export default function App() {
   const albumOnPress = (albumNumber: number) => {
     const currentVal =
       storedAlbums[String(albumNumber)] && JSON.parse(storedAlbums[String(albumNumber)]);
-    const newVal = !JSON.parse(currentVal);
+    const newVal = currentVal ? !JSON.parse(currentVal) : true;
 
     const clone = { ...storedAlbums };
     clone[String(albumNumber)] = JSON.stringify(newVal);
