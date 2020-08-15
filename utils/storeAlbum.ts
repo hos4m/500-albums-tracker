@@ -1,8 +1,8 @@
 import { AsyncStorage } from "react-native";
 
-export const storeAlbum = async (albumNumber: number, newVal: boolean) => {
+export const storeAlbum = (albumNumber: number, newVal: boolean) => {
   try {
-    await AsyncStorage.setItem(String(albumNumber), JSON.stringify(newVal));
+    AsyncStorage.setItem(String(albumNumber), JSON.stringify(newVal));
   } catch (error) {
     alert(error);
   }

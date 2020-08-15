@@ -27,11 +27,16 @@ export default function App() {
     setStoredAlbums(result);
   };
 
-  const albumOnPress = async (albumNumber: number) => {
-    const val = await isOnList(albumNumber);
-    const newVal = JSON.parse(val) ? false : true;
-    await storeAlbum(albumNumber, newVal);
-    getStoredItems();
+  const albumOnPress = (albumNumber: number) => {
+    const currentVal =
+      storedAlbums[String(albumNumber)] && JSON.parse(storedAlbums[String(albumNumber)]);
+    const newVal = !JSON.parse(currentVal);
+
+    const clone = { ...storedAlbums };
+    clone[String(albumNumber)] = JSON.stringify(newVal);
+    setStoredAlbums(clone);
+
+    storeAlbum(albumNumber, newVal);
   };
 
   const renderIntro = () => {
