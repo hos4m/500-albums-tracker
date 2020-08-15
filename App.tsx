@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  ScrollView,
-  Text as TextNative,
-  AsyncStorage,
-  TouchableHighlight,
-} from "react-native";
+import { View, Text as TextNative, TouchableHighlight, SafeAreaView, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
 // @ts-ignore
 import { Text } from "galio-framework";
 
 import data from "./album-list.json";
 import styles from "./App.styles";
-import { isOnList, storeAlbum, getAll } from "./utils";
+import { storeAlbum, getAll } from "./utils";
+import { Album } from "./types";
 
 export default function App() {
   // AsyncStorage.clear();
@@ -54,36 +49,36 @@ export default function App() {
     );
   };
 
-  const renderAlbums = () => {
-    return data.map((single) => {
-      const albumNumber = String(single.Number).padStart(3, "0");
-      const itemStyles =
-        storedAlbums[single.Number] && JSON.parse(storedAlbums[single.Number]) === true
-          ? [styles.item, styles.itemOnList]
-          : [styles.item];
+  const renderItem = ({ item }: { item: Album }) => {
+    const albumNumber = String(item.Number).padStart(3, "0");
+    const itemStyles =
+      storedAlbums[item.Number] && JSON.parse(storedAlbums[item.Number])
+        ? [styles.item, styles.itemOnList]
+        : [styles.item];
 
-      return (
-        <TouchableHighlight key={single.Number} onPress={() => albumOnPress(single.Number)}>
-          <View style={itemStyles}>
-            <Text style={styles.text}>
-              <TextNative style={styles.albumNumber}>{albumNumber}</TextNative> {single.Album}
-            </Text>
-            <Text style={styles.meta}>
-              By {single.Artist} &#8226; {single.Genre} &#8212; {single.Year}
-            </Text>
-          </View>
-        </TouchableHighlight>
-      );
-    });
+    return (
+      <TouchableHighlight key={item.Number} onPress={() => albumOnPress(item.Number)}>
+        <View style={itemStyles}>
+          <Text style={styles.text}>
+            <TextNative style={styles.albumNumber}>{albumNumber}</TextNative> {item.Album}
+          </Text>
+          <Text style={styles.meta}>
+            By {item.Artist} &#8226; {item.Genre} &#8212; {item.Year}
+          </Text>
+        </View>
+      </TouchableHighlight>
+    );
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <StatusBar style="light" backgroundColor="#333" />
-        {renderIntro()}
-        {renderAlbums()}
-      </ScrollView>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar style="light" backgroundColor="#333" />
+      {renderIntro()}
+      <FlatList
+        data={data as Album[]}
+        renderItem={renderItem}
+        keyExtractor={(item) => String(item.Number)}
+      />
+    </SafeAreaView>
   );
 }
