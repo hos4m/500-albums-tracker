@@ -53,7 +53,7 @@ export default function App() {
 
   const renderIntro = () => {
     return (
-      <Modal isVisible={isModalVisible} animationIn="fadeIn" animationOut="fadeOut">
+      <Modal isVisible={isModalVisible}>
         <LinearGradient
           colors={["#E64D66", "#1AB399"]}
           start={[0, 1]}
@@ -70,7 +70,7 @@ export default function App() {
             You can use this app to track your progress. Click on an album to mark it as done or
             undone!
           </Text>
-          <Button round color="#50C7C7" onPress={() => setModalVisible(false)}>
+          <Button round color="transparent" onPress={() => setModalVisible(false)}>
             WHATS POPPIN 💃
           </Button>
         </LinearGradient>
