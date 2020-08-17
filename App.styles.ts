@@ -59,6 +59,25 @@ const styles = StyleSheet.create({
   link: {
     textDecorationLine: "underline",
   },
+
+  floatingButton: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+  },
+
+  settingsClearButton: {
+    marginBottom: 20,
+  },
+
+  settingsText: {
+    color: "#FFF",
+    textAlign: "center",
+  },
+
+  settingsCloseButton: {
+    marginTop: 20,
+  },
 });
 
 export default styles;
